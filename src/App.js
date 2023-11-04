@@ -1,24 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+// import Aboutus from "./Components/Aboutus";
+import Navbar from "./Components/Navbar";
+import Textform from "./Components/Textform";
+import React, { useState } from "react";
+import Alert from "./Components/alert";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [mode, setMode] = useState("light"); //check whether the dark mode is enable or not,
+  const [alert, setAlert] = useState(null);
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type,
+    });
+    setTimeout(() => {
+      setAlert(null);
+    }, 1500);
+  };
+
+  const toggleMode = () => {
+    if (mode === "light") {
+      setMode("dark");
+      document.body.style.background = "grey";
+      showAlert("Dark mode has been enabled.", "success");
+      // setInterval(() => {
+      //   document.title='Textutils is amazing.';
+      // }, 2000);
+      // setInterval(() => {
+      //   document.title='Install Textutils Now.';
+      // }, 1500);
+    } else {
+      setMode("light");
+      document.body.style.background = "white";
+      showAlert("Light mode has been enabled.", "success");
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <Navbar title="Textutils" aboutText="About Textutils" /> */}
+      {/* <Router> */}
+        <Navbar
+          title="Textutils"
+          // aboutText="About Us"
+          mode={mode}
+          toggleMode={toggleMode}
+        />
+        <Alert alert={alert} />
+        {/* <div className="container my-3">
+          <Routes>
+             <Route path="/aboutus" element={<Aboutus />} />
+
+            <Route
+              path="/"
+              element={ */}
+                <Textform
+                  showAlert={showAlert}
+                  heading="Enter the text to analyse"
+                  mode={mode}
+                />
+              {/* }
+            ></Route>
+          </Routes>
+        </div>
+      </Router> */}
+    </>
   );
 }
 
