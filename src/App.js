@@ -1,10 +1,10 @@
 import "./App.css";
-// import Aboutus from "./Components/Aboutus";
+import Aboutus from "./Components/Aboutus";
 import Navbar from "./Components/Navbar";
 import Textform from "./Components/Textform";
 import React, { useState } from "react";
 import Alert from "./Components/alert";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [mode, setMode] = useState("light"); //check whether the dark mode is enable or not,
@@ -20,10 +20,21 @@ function App() {
     }, 1500);
   };
 
-  const toggleMode = () => {
+  const removeBodyClasses = () => {
+    document.body.classList.remove("bg-light");
+    document.body.classList.remove("bg-dark");
+    document.body.classList.remove("bg-primary");
+    document.body.classList.remove("bg-danger");
+    document.body.classList.remove("bg-success");
+    document.body.classList.remove("bg-warning");
+  };
+  const toggleMode = (cls) => {
+    removeBodyClasses();
+    console.log(cls);
+    document.body.classList.add("bg-" + cls);
     if (mode === "light") {
       setMode("dark");
-      document.body.style.background = "grey";
+      document.body.style.background = "#042743";
       showAlert("Dark mode has been enabled.", "success");
       // setInterval(() => {
       //   document.title='Textutils is amazing.';
@@ -39,8 +50,8 @@ function App() {
   };
   return (
     <>
-      {/* <Navbar title="Textutils" aboutText="About Textutils" /> */}
-      {/* <Router> */}
+      {/* <Navbar title="Textutils" aboutText="About Textutils" />  */}
+      <Router>
         <Navbar
           title="Textutils"
           // aboutText="About Us"
@@ -48,23 +59,23 @@ function App() {
           toggleMode={toggleMode}
         />
         <Alert alert={alert} />
-        {/* <div className="container my-3">
+        <div className="container my-3">
           <Routes>
-             <Route path="/aboutus" element={<Aboutus />} />
+            <Route path="/aboutus" element={<Aboutus mode={mode} />} />
 
             <Route
               path="/"
-              element={ */}
+              element={
                 <Textform
                   showAlert={showAlert}
-                  heading="Enter the text to analyse"
+                  heading="Try Textutils- word counter,character counter, Remove extraspaces"
                   mode={mode}
                 />
-              {/* }
+              }
             ></Route>
           </Routes>
         </div>
-      </Router> */}
+      </Router>
     </>
   );
 }
